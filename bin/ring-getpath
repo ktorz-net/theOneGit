@@ -1,0 +1,9 @@
+#!/usr/bin/python3
+import sys
+import mycmd
+
+dico= mycmd.buildList( sys.stdin )
+for path in dico :
+	print(path)
+
+exit()

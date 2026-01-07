@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+import sys
+import mycmd, ring
+
+parameters= [
+	mycmd.Parameter( 'repo', 'r', 1 )
+]
+
+valid, parameters, arguments= mycmd.parseParameters( parameters, sys.argv, 1 )
+
+if valid :
+
+	gits= ring.loadList( arguments[0] )
+	for git in gits :
+		mycmd.execute( 'rm -fr '+ git.path)
+
+exit()
+
+
+

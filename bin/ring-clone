@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+import sys
+import mycmd, ring
+
+parameters= [
+	mycmd.Parameter( 'repo', 'r', 1 )
+]
+
+valid, parameters, arguments= mycmd.parseParameters( parameters, sys.argv, 1 )
+
+if valid :
+
+	gits= ring.loadList( arguments[0] )
+	for git in gits :
+		mycmd.execute( 'git clone ' + git.remotes['origin'] +' '+ git.path)
+		for name in git.remotes :
+			if name != 'origin' :
+				mycmd.execute( 'git -C '+ git.path +' remote add ' + name  +' '+ git.remotes[name] )
+
+exit()

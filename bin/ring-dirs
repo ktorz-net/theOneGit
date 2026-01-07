@@ -1,0 +1,6 @@
+#!/usr/bin/python3
+import ring
+
+gits= ring.makeList()
+dirs= ring.directories(gits)
+print( '\n'.join( [ str(d) for d in dirs ] ) )

@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+import mycmd, ring
+import sys, os, pathlib
+
+RED= '\033[0;31m'
+LIGHT= '\033[1;34m'
+NC= '\033[0m' # No Color
+
+rootPath= pathlib.Path().absolute()
+gits= ring.makeList()
+cmd= ' '.join(sys.argv[1:])
+
+for depot in gits :
+	os.chdir( depot.path )
+	print( RED + '> ' + LIGHT + depot.path + NC)
+	mycmd.execute( cmd, verbose=False )
+	os.chdir( rootPath )
+
+exit()

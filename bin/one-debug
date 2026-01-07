@@ -1,0 +1,8 @@
+#!/usr/bin/python3
+import sys
+
+print("Test...")
+
+sys.path.insert( 1, __file__.split('bin')[0] )
+from src.theonegit.__main__ import commandHandler
+commandHandler()
