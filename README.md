@@ -1,4 +1,4 @@
-# The One Git-project: A project to rule them all
+# The One Git: a project to rule them all
 
 _The One Git_ is mainly designed to manage recursivelly a collection of git repos.
 
