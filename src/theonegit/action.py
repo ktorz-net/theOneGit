@@ -14,6 +14,7 @@ register( "help", doHelp )
 register( "complete", complete.doComplete )
 
 def doList( arguments ):
+    print( f"do list: {arguments}" )
     target= []
     if len( arguments ) > 1 :
         target= arguments[1:]

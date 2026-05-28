@@ -35,30 +35,30 @@ def loadList( fileName ):
 
 	return gits
 
-def makeList( decendents= [] ):
+def makeList( targets= [], recursif=False, deep=1 ):
 	gits= []
 	dirs= []
-	forbidden= [ "", ".", "..", "Archives", "Games", "Téléchargements", "Trash", "Fun", "Large", "snap", "Shared", "Zomboid" ]
+	forbidden= [ "", ".", "..", ".git" ] #, "Archives", "Games", "Téléchargements", "Trash", "Fun", "Large", "snap", "Shared", "Zomboid" ]
 
 	def validChildren( son, son_path ):
 		return son not in forbidden and os.path.isdir( son_path ) and son[0] != '.'
 
-	if len( decendents ) == 0 :
-		decendents= cmd.query( 'ls .' )
+	if len( targets ) == 0 :
+		targets= ["."]
 	
-	for son in decendents :
-		son_path = './'+ son
-		if validChildren(son, son_path) :
-			dirs.append( son_path )
-
+	dirs= targets.copy()
+	deeps= [0 for _ in dirs]
+	
 	while len(dirs) > 0 :
 		elt = dirs.pop(0) # for each directory
+		curentDeep= deeps.pop(0)
+
 		decendents= cmd.query( 'ls -a "'+ elt + '"' )
 		#print( "> visit: "+ elt )
 
 		# test if it is a git repo
 		if ".git" in decendents and os.path.isdir( elt+"/.git" ) :
-			git= Git( elt[2:] )
+			git= Git( elt )
 			remotes= cmd.query( 'git -C "'+ elt + '" remote' )
 			for name in remotes :
 				url= cmd.query( 'git -C "'+ elt + '" remote get-url '+ name )[0]
@@ -66,8 +66,9 @@ def makeList( decendents= [] ):
 				#print('#  - '+name+': '+ url  )
 			gits.append( git )
 			decendents= cmd.query( 'ls -a "'+ elt + '"' )
+			curentDeep+= 1
 
-		else :
+		if recursif or curentDeep <= deep :
 			# Add decendents directories to process list
 			subdirs= []
 			for son in decendents :
@@ -75,7 +76,7 @@ def makeList( decendents= [] ):
 				if validChildren(son, son_path) :
 					subdirs.append( son_path )
 			dirs = subdirs + dirs
-
+			deeps= [curentDeep for _ in subdirs] + deeps
 	return gits
 
 def directories( gits ):
