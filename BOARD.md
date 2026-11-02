@@ -1,9 +1,13 @@
 # Devellopement Board.
 
+## IHS - In the Hot Seat
+
+- Passer de cmd à `subprocess` et `argparse`
+- Clean version + pip push
 
 ## Project
 
-- [x] Real pip project
+- [ ] Real pip project
 - [ ] marp doc
 
 

@@ -21,7 +21,7 @@ def doList( arguments ):
     gits= git.makeList(target)
     print( git.stringList(gits) )
 
-actions["list"]= doList
+register( "list", doList )
 
 def doDo( arguments ):
     RED= '\033[0;31m'
@@ -38,9 +38,9 @@ def doDo( arguments ):
         cmd.execute( command, verbose=False )
         os.chdir( rootPath )
 
-actions["do"]= doDo
+register( "do", doDo )
 
-def doStatus(arguments):
+def doState(arguments):
     RED= '\033[0;31m'
     LIGHT= '\033[1;34m'
     NC= '\033[0m' # No Color
@@ -55,4 +55,5 @@ def doStatus(arguments):
         cmd.execute( command, verbose=False )
         os.chdir( rootPath )
 
-actions["status"]= doStatus
+register( "state", doState )
+
